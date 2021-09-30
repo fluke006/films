@@ -1,0 +1,122 @@
+.container{
+   width: 100%;
+   max-width: 1340px;
+   margin: 0 auto;
+   padding: 20px;
+}
+
+.heading{
+   margin: 0;
+   margin-bottom: 25px;
+   font-size: 48px;
+   text-align: center;
+   color: #333;
+}
+
+.box{
+   display: block;
+   width: 100%;
+   max-width: 500px;
+   margin: 0 auto;
+   padding: 10px;
+}
+
+.form__select{
+   display: block;
+   width: 100%;
+   max-width: 150px;
+   margin: 0 auto;
+   margin-bottom: 15px;
+   padding: 10px;
+   color: white;
+   text-align: center;
+   border-radius: 5px;
+   background-color: #333;
+}
+
+.form__select:hover{
+   opacity: 0.8;
+}
+
+.form__select:focus{
+   border: solid 2px red;
+}
+
+.btn{
+   display: block;
+   width: 100%;
+   max-width: 100px;
+   margin: 0 auto;
+   margin-bottom: 30px;
+   padding: 8px;
+   color: white;
+   text-align: center;
+   border-radius: 5px;
+   background-color: #333;
+}
+
+.btn:hover{
+   opacity: 0.8;
+}
+
+.btn:active{
+   opacity: 0.8;
+   border: solid 2px red;
+}
+
+.list{
+   display: flex;
+   /* width: 100%;
+   max-width: 1300px; */
+   justify-content: space-around;
+   flex-wrap: wrap;
+   margin: 0 auto;
+   padding: 0;
+   list-style-type: none;
+}
+
+.list__item{
+   display: block;
+   width: 100%;
+   max-width: 400px;
+   margin: 10px ;
+   padding: 10px;
+   text-align: center;
+   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.film__image{
+   margin-bottom: 10px;
+}
+
+.film__heading{
+   margin: 0;
+   margin-bottom: 10px;
+   font-size: 32px;
+   text-align: center;
+   color: #333;
+}
+
+.film__info{
+   margin: 0;
+   margin-bottom: 15px;
+   padding: 0;
+}
+
+.genre__list{
+   display: flex;
+   flex-direction: column;
+   flex-grow: 1;
+   margin: 0;
+   margin-bottom: 15px;
+   padding: 0;
+   list-style-type: none;
+}
+
+.genre__item{
+   padding: 2px;
+}
+
+.date{
+   display: block;
+}
