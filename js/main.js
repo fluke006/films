@@ -1,7 +1,9 @@
 // Elements DOM
 var elList = document.querySelector('.list');
 var elForm = document.querySelector('.form');
-var elSelect= document.querySelector('.form__select');
+var elSelect = document.querySelector('.form__select');
+var elSearch = document.querySelector('.search');
+var elSort = document.querySelector(".select__sort");
 
 elList.innerHTML = null;
 
@@ -28,6 +30,35 @@ for (var option of resultGenre) {
 	elSelect.appendChild(elOption)
 }
 
+const sortFns = {
+   0: (a, b)=>{
+      if (a.title < b.title) {
+         return -1
+      }
+
+      if (a.title > b.title) {
+         return 1
+      }
+
+      return 0
+   },
+
+   1: (a, b)=>{
+      if (a.title < b.title) {
+         return 1
+      }
+
+      if (a.title > b.title) {
+         return -1
+      }
+
+      return 0
+   },
+
+   2 : (a, b)=> a.release_date - b.release_date,
+
+   3 : (a, b)=>  b.release_date - a.release_date,
+}
 
 // Films
 function renderFilms(arr, node) {
@@ -35,7 +66,6 @@ function renderFilms(arr, node) {
    elList.innerHTML = null;
 
 	arr.forEach((film) => {
-      if(film.genres.includes(elSelect.value)){
          var newLi = document.createElement('li');
          var newHeading = document.createElement('h3');
          var newImage = document.createElement('img');
@@ -81,17 +111,38 @@ function renderFilms(arr, node) {
          node.appendChild(newLi);
       }
 
-	});
+	);
 }
-
-renderFilms(films, elList);
-
 
 //form 
 elForm.addEventListener('submit', (evt) => {
    
    evt.preventDefault();
    
-   renderFilms(films, elList);
+   const genreValue = elSelect.value;
+   const searchValue = elSearch.value;
+   const sortValue = elSort.value;
 
+   const newRegx = new RegExp(searchValue, 'gi');
+   
+   let filterFilms = []; 
+   
+   if ( genreValue === 'all') {
+
+      filterFilms = films.filter((movie)=> movie.title.match(newRegx))
+   
+   } else {
+      
+      filterFilms = films
+      .filter((film)=> film.genres.includes(genreValue)) 
+      .filter((movie)=> movie.title.match(newRegx))
+
+   };
+
+   filterFilms.sort(sortFns[sortValue])
+
+
+   renderFilms(filterFilms, elList);
 })
+
+renderFilms(films, elList);
