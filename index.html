@@ -14,9 +14,9 @@
    <main class="main">
       <section class="film">
          <div class="container">
-            <h1 class="heading">Films</h1>
 
             <div class="box">
+               <h1 class="heading">Films</h1>
                <form class="form">
 
                   <input class="search" type="search" placeholder="Search">
@@ -31,16 +31,39 @@
                      <option value="3">New-Old</option>
                      <option value="2">Old-New</option>
                   </select>
-
+                  <!-- <span>&times;</span> -->
 
                   <button class="btn" type="submit">Submit</button>
                </form>
-            </div>
 
+               <span class="bookmarks__strong">
+                  <a class="bookmarks__link btn" href="#bookmarks">Bookmarks</a>
+               </span>
+
+            </div>
             <ul class="list"></ul>
+
          </div>
       </section>
+
+
+      <section class="bookmarks" id="bookmarks">
+         <div class="container">
+            <h2 class="heading">Bookmarks</h2>
+            <ul class="bookmarks__list list"></ul>
+         </div>
+      </section>
+
+      <!-- =============== Modal =============== -->
+
    </main>
+
+   
+   <div class="modal">
+      <ul class="modal__list"></ul>
+
+      
+   </div>
 
    <script src="./js/films.js"></script>
    <script src="./js/utils.js"></script>

@@ -1,4 +1,6 @@
 .container{
+   /* display: flex; */
+   /* justify-content: space- space-evenly; */
    width: 100%;
    max-width: 1340px;
    margin: 0 auto;
@@ -36,6 +38,7 @@
 
 .search::placeholder{
    color: white;
+   opacity: 0.7;
 }
 
 .form__select{
@@ -85,7 +88,7 @@
    width: 100%;
    max-width: 100px;
    margin: 0 auto;
-   margin-bottom: 30px;
+   margin-bottom: 10px;
    padding: 8px;
    color: white;
    text-align: center;
@@ -157,4 +160,77 @@
 
 .date{
    display: block;
+}
+
+.bookmarks__btn{
+   display: block;
+   width: 150px;
+   margin: 0 auto;
+   margin-top: 5px;
+   margin-bottom: 5px;
+   padding: 5px;  
+}
+
+.bookmarks__link{
+   display: block;
+   border: solid 2px #333;
+   text-decoration: none;
+}
+
+.bookmarks{
+   margin-top: 200px;
+}
+
+/* ================ modal ================ */
+
+.modal{
+   /* display: none; */
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   /* background: rgba(138,138,138, 0.8); */
+}
+
+.modal__list{
+   position: fixed;
+   top: -10%;
+   left: 39%;
+   display: block;
+   width: 300px;
+   margin: 0;
+   margin: 18% auto;
+   padding: 10px;
+   list-style-type: none;
+}
+
+.modal__item{
+   display: block;
+   width: 300px;
+   margin: 0;
+   margin-bottom: 15px;
+   padding: 10px;
+   border-radius: 10px;
+   background-color: white;
+}
+
+.modal__close{
+   position: absolute;
+   width: 50px;
+   height: 50px;
+   top: 0px;
+   right: -8%;
+   padding: 5px;
+   font-size: 30px;
+   font-weight: bold;
+   text-align: center;
+   color: blue;
+   border-radius: 50%;
+   background-color: black;
+}
+
+.modal__close:active{
+   opacity: 0.8;
+   color: green;
 }
