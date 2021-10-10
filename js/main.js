@@ -122,7 +122,8 @@ function renderBookmarks(arr, node) {
 
 		bookmarksHeading.textContent = film.title;
 
-		bookmarkBtn.textContent = 'Watch'
+		bookmarkBtn.textContent = 'Delete';
+		bookmarkBtn.dataset.filmId = film.id
 
 		bookmarksImage.setAttribute('class', 'film__image');
 		bookmarksImage.setAttribute('src', film.poster);
@@ -133,7 +134,7 @@ function renderBookmarks(arr, node) {
 		bookmarksLi.setAttribute('class', 'list__item');
 		bookmarksHeading.setAttribute('class', 'film__heading');
 
-		bookmarkBtn.setAttribute('class', 'btn');	
+		bookmarkBtn.setAttribute('class', 'bookmarks__delete-btn btn');	
 
 		bookmarksLi.appendChild(bookmarksImage);
 		bookmarksLi.appendChild(bookmarksHeading);
@@ -208,26 +209,35 @@ elList.addEventListener('click', (evt) => {
 		const foundFilm = films.find((film) => film.id === filmId);
 
 		window.document.body.style.background = 'rgba(150, 150, 150, 0.9)'
+				
+		modal.push(foundFilm)
+
+		elModalList.style.display = 'block'
+		elModalList.innerHTML = null
+		renderFilmInfo(modal, elModalList)
 		
-		if (!modal.includes(foundFilm)) {
-			
-			modal.push(foundFilm)
-			
-			elModalList.style.display = 'block'
-			elModalList.innerHTML = null
-			renderFilmInfo(modal, elModalList)
-		}
 	}
 });
 
+elBookmarks.addEventListener('click', (evt)=>{
+	if (evt.target.matches('.bookmarks__delete-btn')) {
+		
+		const filmId = evt.target.dataset.filmId;
 
+		const foundBookmarks = bookmarks.find((film)=> film.id === filmId);
+
+		bookmarks.splice(foundBookmarks, 1);
+
+		renderBookmarks(bookmarks, elBookmarks);
+	}
+})
 
 elModalList.addEventListener('click', (evt)=>{
 	if (evt.target.matches('.modal__close')) {
 
 		const filmId = evt.target.dataset.filmId
 
-		const foundModal = films.findIndex((film)=> films.id === filmId);
+		const foundModal = films.findIndex((film)=> film.id === filmId);
 
 		modal.splice(foundModal, 1);
 		
