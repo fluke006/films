@@ -213,11 +213,29 @@ elList.addEventListener('click', (evt) => {
 			
 			modal.push(foundFilm)
 			
+			elModalList.style.display = 'block'
 			elModalList.innerHTML = null
 			renderFilmInfo(modal, elModalList)
 		}
 	}
 });
+
+
+
+elModalList.addEventListener('click', (evt)=>{
+	if (evt.target.matches('.modal__close')) {
+
+		const filmId = evt.target.dataset.filmId
+
+		const foundModal = films.findIndex((film)=> films.id === filmId);
+
+		modal.splice(foundModal, 1);
+		
+		elModalList.style.display = 'none';
+
+		window.document.body.style.background = 'white'
+	}
+})
 
 //form
 elForm.addEventListener('submit', (evt) => {

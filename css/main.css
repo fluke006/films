@@ -206,6 +206,7 @@
 }
 
 .modal__item{
+   position: fixed;
    display: block;
    width: 300px;
    margin: 0;
