@@ -1,28 +1,27 @@
 // Elements DOM
-var elList = document.querySelector('.list');
-var elForm = document.querySelector('.form');
-var elSelect = document.querySelector('.form__select');
-var elSearch = document.querySelector('.search');
-var elSort = document.querySelector('.select__sort');
-var elBookmarks = document.querySelector('.bookmarks__list');
-var elModalList = document.querySelector('.modal__list');
+const elList = document.querySelector('.list');
+const elForm = document.querySelector('.form');
+const elSelect = document.querySelector('.form__select');
+const elSearch = document.querySelector('.search');
+const elSort = document.querySelector('.select__sort');
+const elBookmarks = document.querySelector('.bookmarks__list');
+const elModalBox = document.querySelector('.modal');
 
-elList.innerHTML = null;
-// elBookmarks.innerHTML=null
+
 
 // Select genres
-var resultGenre = [];
+const resultGenre = [];
 
-for (var film of films) {
-	for (var ganre of film.genres) {
+for (const film of films) {
+	for (const ganre of film.genres) {
 		if (!resultGenre.includes(ganre)) {
 			resultGenre.push(ganre);
 		}
 	}
 }
 
-for (var option of resultGenre) {
-	var elOption = document.createElement('option');
+for (const option of resultGenre) {
+	const elOption = document.createElement('option');
 	elOption.value = option;
 	elOption.textContent = option;
 
@@ -65,12 +64,12 @@ function renderFilms(arr, node) {
 	elList.innerHTML = null;
 
 	arr.forEach((film) => {
-		var newLi = document.createElement('li');
-		var newHeading = document.createElement('h3');
-		var newImage = document.createElement('img');
-		var newParagraph = document.createElement('p');
-		var newBtn = document.createElement('button');
-		var modalBtn = document.createElement('button');
+		const newLi = document.createElement('li');
+		const newHeading = document.createElement('h3');
+		const newImage = document.createElement('img');
+		const newParagraph = document.createElement('p');
+		const newBtn = document.createElement('button');
+		const modalBtn = document.createElement('button');
 
 		newHeading.textContent = film.title;
 		newParagraph.textContent =
@@ -107,13 +106,26 @@ function renderFilms(arr, node) {
 	});
 }
 
-const bookmarks = [];
+//Bookmarks
 
+const localBookmarks = JSON.parse(window.localStorage.getItem('bookmarks'));	
+const bookmarks = localBookmarks || [];
+
+//localStorage
+function updateTodos() {
+	renderBookmarks(bookmarks, elBookmarks);
+	window.localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+}
+
+updateTodos();
+
+//Modal
 const modal = [];
 
+// Render Bookmarks
 function renderBookmarks(arr, node) {
 	node.innerHTML = null;
-
+0
 	arr.forEach((film) => {
 		const bookmarksLi = document.createElement('li');
 		const bookmarksHeading = document.createElement('h2');
@@ -144,12 +156,12 @@ function renderBookmarks(arr, node) {
 	});
 }
 
-
+// Render Modal
 function renderFilmInfo(arr, node) {
    node.innerHTML = null;
 
    arr.forEach((film) => {
-      const modalLI = document.createElement('li');
+      const modalLI = document.createElement('div');
       const modalHeading = document.createElement('h3');
       const modalParagraph = document.createElement('p');
       const modalGenresList = document.createElement('ul');
@@ -160,8 +172,8 @@ function renderFilmInfo(arr, node) {
       modalParagraph.textContent = film.overview;
 		modalClose.innerHTML = '&times'
       
-      for (var genre of film.genres) {
-         var newGenreLi = document.createElement('li');
+      for (const genre of film.genres) {
+         const newGenreLi = document.createElement('li');
          newGenreLi.setAttribute('class', 'genre__item');
          
          newGenreLi.textContent = genre;
@@ -189,6 +201,7 @@ function renderFilmInfo(arr, node) {
    });
 }
 
+// elList listened
 elList.addEventListener('click', (evt) => {
 	if (evt.target.matches('.bookmarks__btn')) {
 		const filmId = evt.target.dataset.filmId;
@@ -199,6 +212,8 @@ elList.addEventListener('click', (evt) => {
 			bookmarks.push(foundFilm);
 
 			renderBookmarks(bookmarks, elBookmarks);
+
+			updateTodos()
 		}
 	}
 
@@ -208,17 +223,18 @@ elList.addEventListener('click', (evt) => {
 
 		const foundFilm = films.find((film) => film.id === filmId);
 
-		window.document.body.style.background = 'rgba(150, 150, 150, 0.9)'
-				
 		modal.push(foundFilm)
 
-		elModalList.style.display = 'block'
-		elModalList.innerHTML = null
-		renderFilmInfo(modal, elModalList)
+		elModalBox.innerHTML = null
+
+		elModalBox.classList.add('modal--show');
+
+		renderFilmInfo(modal, elModalBox)
 		
 	}
 });
 
+// elBookmarks listened
 elBookmarks.addEventListener('click', (evt)=>{
 	if (evt.target.matches('.bookmarks__delete-btn')) {
 		
@@ -229,25 +245,35 @@ elBookmarks.addEventListener('click', (evt)=>{
 		bookmarks.splice(foundBookmarks, 1);
 
 		renderBookmarks(bookmarks, elBookmarks);
+		
+		updateTodos()
 	}
 })
 
-elModalList.addEventListener('click', (evt)=>{
-	if (evt.target.matches('.modal__close')) {
+// elModalList listened
+elModalBox.addEventListener('click', (evt)=>{
+	const isTargetRemover =
+	evt.target.matches('.modal') ||
+	evt.target.matches('.modal__close');
+
+
+	if (isTargetRemover) {
 
 		const filmId = evt.target.dataset.filmId
 
-		const foundModal = films.findIndex((film)=> film.id === filmId);
+		const foundModal = films.find((film)=> film.id === filmId);
 
 		modal.splice(foundModal, 1);
-		
-		elModalList.style.display = 'none';
 
-		window.document.body.style.background = 'white'
+		elModalBox.classList.remove('modal--show');
+
+		renderFilmInfo(modal, elModalBox)
+
+		console.log(modal);
 	}
 })
 
-//form
+// Form Listened
 elForm.addEventListener('submit', (evt) => {
 	evt.preventDefault();
 
@@ -271,6 +297,9 @@ elForm.addEventListener('submit', (evt) => {
 
 	renderFilms(filterFilms, elList);
 
+	// updateTodos()	
+
 });
 
 renderFilms(films, elList);
+renderBookmarks(bookmarks, elBookmarks);
